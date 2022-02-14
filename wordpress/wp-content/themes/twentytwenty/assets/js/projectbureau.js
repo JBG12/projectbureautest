@@ -4,8 +4,8 @@ $(document).ready(function() {
       Back to Top button
     /*=======================================================================*/
 
-    // Add the icon button for back to top.
-    $("body").append('<a class="top"><i class="fas fa-arrow-up"></i></a>');
+    // Add the icon button for back to top button.
+    $("body.page").append('<a class="top"><i class="fas fa-arrow-up"></i></a>');
 
     // Check if the user is scrolled down a bit.
     $(window).scroll(function ScrollUp() {

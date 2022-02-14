@@ -72,7 +72,11 @@ function activiteit() {
     if ($query->have_posts()) { 
         echo '<div class="Activiteiten">';
             while ( $query->have_posts() ) : $query->the_post();
-            echo '<div class="Activiteit">';
+            $post_id = get_the_ID();
+            // call here on function and give information to check if information is valid:
+            // aFunctionHere($post);
+            //call_user_func(array($this, 'testF')); 
+            echo '<div id="'.get_the_ID().'" class="Activiteit">';
                 echo '<h4 class="title">';
                     echo '<a href="'.get_permalink().'">'.get_the_title().'</a>';
                 echo '</h4>';

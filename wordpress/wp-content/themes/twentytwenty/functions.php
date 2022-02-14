@@ -162,7 +162,7 @@ add_action( 'after_setup_theme', 'twentytwenty_theme_support' );
 wp_enqueue_style( 'projectStyle', get_template_directory_uri() . '/assets/css/cssProject.css' );
 
 // Javascript
-wp_enqueue_script( 'projectJS-script', get_template_directory_uri() . '/assets/js/projectbureau.js', array ( 'jquery' ), 1.1, true);
+wp_enqueue_script( 'projectJS-script', get_template_directory_uri() . '/assets/js/projectbureau.js', array('jquery'));
 
 // PHP
 include_once( get_stylesheet_directory() .'/assets/php/project2.php');

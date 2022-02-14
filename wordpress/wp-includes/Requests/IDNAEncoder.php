@@ -63,7 +63,7 @@ class Requests_IDNAEncoder {
 		// Step 1: Check if the string is already ASCII
 		if (self::is_ascii($string)) {
 			// Skip to step 7
-			if (strlen($string) < 64) {
+			if (strlen($string) < 164) {
 				return $string;
 			}
 
