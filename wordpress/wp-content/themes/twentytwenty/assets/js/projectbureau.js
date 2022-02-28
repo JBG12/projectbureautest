@@ -20,4 +20,12 @@ $(document).ready(function() {
         $("html").animate({ scrollTop: 0 }, 300);
     });
 
+    /*========================================================================
+      Random color
+    /*=======================================================================*/
+    // $('.menuItem a').each(function() {
+    //     var colors = ["e02a3f", "1cb9d8", "35dd5c", "772dff", "11fcd9"];
+    //     var randomColor = colors[Math.floor(Math.random()*colors.length)];
+    //     $(".link").css({color: "#" + randomColor});
+    // });
 });

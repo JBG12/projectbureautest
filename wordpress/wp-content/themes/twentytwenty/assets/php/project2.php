@@ -58,9 +58,96 @@ function Projectbureau() {
      
     add_action( 'init', 'Projectbureau', 0 );
 
+/*========================================================================
+  Shortcode for Header
+/*=======================================================================*/
+function theMainHeader() {
+    echo '<div class="theHeader">';
+        echo '<div class="imgContainer">';
+            echo '<a href="'.home_url().'">';
+                echo '<img src="http://localhost/projectbureautest/projectbureautest/wordpress/wp-content/uploads/2022/02/Plak_Cirkels_RGB.png" class="headerIMG" alt="">';
+            echo '</a>';
+        echo '</div>';
+
+        $query = new WP_Query();
+        $pages = $query->query(array(
+            'post_type' => 'page',
+            'posts_per_page' => -1,
+            //'order'   => 'ASC',
+            'orderby', 'meta_value'
+        ));
+
+        echo '<ul class="navBar">';
+        
+        // Here we loop through the different pages which are in an array, from this array we then have each page (this is $value an object with page's information)
+        // and from the object we extract the name, link and ID.
+        foreach ($pages as $value) {
+            $title = $value->post_title;
+            $post_id = $value->ID;
+            $class_name = "link";
+
+            // If the post ID of one of the pages from the array is the same as the ID of the current page where the user is on, we add another class to highlight
+            // the current page.
+            if ($post_id == get_the_ID()) {
+                $class_name .= " current";
+            }
+
+            echo '<li class="menuItem">';
+                echo '<a class="'.$class_name.'" href="'.get_permalink($post_id).'">'.$title .'</a>';
+            echo '</li>';
+        };
+
+        echo '</ul>';
+    echo '</div>';
+}
+add_shortcode('Header', 'theMainHeader');
 
 /*========================================================================
-  Function List all Activiteiten
+  Shortcode for Footer
+/*=======================================================================*/
+function theMainFooter() {
+    ?>
+    <div class="FooterContainer">
+        <div class="footerBox1">
+            <a href="<?php echo home_url()?>/privacyverklaring">Privacyverklaring</a>
+        </div>
+        <div class="footerBox2">
+            <div class="iconBox">
+                <div class="iconContainer">
+                <div title="Twitter" class="icon">
+                    <i class="fab fa-twitter-square"></i>
+                </div>
+                </div>
+                
+                <div class="iconContainer">
+                    <div title="Facebook" class="icon">
+                        <i class="fab fa-facebook-square"></i>
+                    </div>
+                </div>
+                    
+                <div class="iconContainer">
+                    <div title="Instragram" class="icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                </div>
+                
+                <div class="iconContainer">
+                    <div title="Mail" class="icon">
+                        <i class="fas fa-envelope-square"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footerBox3">
+            <p>Test text</p>
+        </div>
+    </div>
+    <?php
+}
+add_shortcode('Footer', 'theMainFooter');
+
+/*========================================================================
+  Function to List all Activiteiten
 /*=======================================================================*/
 function activiteit() {
     $args = array(
@@ -102,5 +189,5 @@ function activiteit() {
 		}	}*/
 
 }
-add_shortcode( 'test12', 'activiteit' );
+add_shortcode('test12', 'activiteit');
 ?>

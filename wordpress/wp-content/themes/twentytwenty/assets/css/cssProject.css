@@ -1,32 +1,91 @@
 /*========================================================================
-  Misc
+  Header
 /*=======================================================================*/
-/* Back to top button. */
-.top {
-  float: right;
-  position: fixed;
-  z-index: 100;
-  bottom: 15px;
-  right: 15px;
-  font-size: 30px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  color: #fff;
-  background-color: #1d1e22;
-  border: 2px solid #fff;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s ease;
+/* Header Image */
+.theHeader .imgContainer .headerIMG {
+  width: 30%;
+  margin: 0 auto;
 }
-/* Footer */
-/* Social media icons in footer */
+/* Header Navigation bar */
+.theHeader .navBar {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.theHeader .navBar .menuItem {
+  list-style-type: none;
+  width: max-content;
+}
+.theHeader .navBar .menuItem .link.current {
+  text-decoration: underline;
+}
+/* Add a divider after each menu item except the last one. */
+.theHeader .navBar .menuItem:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  top: 10px;
+  margin-left: 9px;
+  background-color: rgb(107, 100, 100);
+}
+/* Media query to optimise for mobile viewing. */
+@media (max-width: 1000px) {
+  .theHeader .navBar {
+    display: block;
+  }
+  .theHeader .navBar .menuItem {
+    text-align: center;
+    margin: 0 auto;
+  }
+  .theHeader .navBar .menuItem:not(:last-child)::after {
+    display: none;
+  }
+}
+/*========================================================================
+  Footer
+/*=======================================================================*/
+html
+  .elementor-column-gap-default
+  > .elementor-column
+  > .elementor-element-populated {
+  padding: 0px;
+}
+.FooterContainer {
+  display: flex;
+}
 .footerBox1,
 .footerBox2,
 .footerBox3 {
   width: 33.3%;
-  padding: 20px 0;
+  float: left;
+  align-self: center;
+  padding: 25px 0;
 }
+.footerBox1 p,
+.footerBox1 a,
+.footerBox2 p,
+.footerBox3 p {
+  text-align: center;
+}
+.footerBox1 {
+  display: flex;
+}
+.footerBox1 a {
+  align-self: center;
+  width: 100%;
+}
+.footerBox2::before {
+  content: "Social Media";
+  font-weight: bold;
+  font-size: 22px;
+  margin: 0 auto;
+  position: relative;
+  left: calc(50% - 65px);
+  top: -10px;
+}
+/* Social media icons in footer */
 .iconBox {
   display: grid;
   width: min-content;
@@ -44,7 +103,6 @@
   border: 2px solid rgb(218, 196, 196);
   overflow: hidden;
   border-radius: 50%;
-  display: flex;
   justify-content: center;
   align-items: center;
   margin: auto;
@@ -93,6 +151,43 @@
   display: flex;
   margin: 0 auto;
 }
+/* Rotate icons on hover */
 .iconContainer:hover i {
   transform: rotateX(10deg) rotateY(360deg) rotateZ(10deg);
+}
+@media (max-width: 1200px) {
+  .FooterContainer {
+    display: grid;
+  }
+  .footerBox1,
+  .footerBox2,
+  .footerBox3 {
+    width: 100%;
+  }
+}
+@media (max-width: 500px) {
+  .iconBox {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/*========================================================================
+  Misc
+/*=======================================================================*/
+/* Back to top button. */
+.top {
+  float: right;
+  position: fixed;
+  z-index: 100;
+  bottom: 15px;
+  right: 15px;
+  font-size: 30px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #fff;
+  background-color: #1d1e22;
+  border: 2px solid #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
 }
