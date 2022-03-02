@@ -168,7 +168,7 @@ function activiteit() {
                     echo '<a href="'.get_permalink().'">'.get_the_title().'</a>';
                 echo '</h4>';
                 echo '<p class="description">'.get_the_excerpt().'</p>';
-            echo '</div>';
+            echo '</div>';//
             endwhile;
         echo '</div>';
     }
