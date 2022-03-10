@@ -47,27 +47,23 @@ if ( is_singular() ) {
 		} else {
 			the_title( '<h2 class="entry-title heading-size-1"><a href="' . esc_url( get_permalink() ) . '">', '</a></h2>' );
 		}
-
-		$intro_text_width = '';
-
-		if ( is_singular() ) {
-			$intro_text_width = ' small';
-		} else {
-			$intro_text_width = ' thin';
+		
+		
+ 		// Display start and end date of activity.
+		if(is_single()) {
+			global $db2;
+			$post_id 	= get_the_ID();
+			$startDate  = get_field("start_tijd", $post_id);
+			$endDate    = get_field("eind_tijd", $post_id);
+			$maxUsers 	= get_field("maximaal_aantal_deelnemers", $post_id);
+			$availableUsers = "";
+			$deelnemers = $db2->get_var("SELECT COUNT(*) FROM `$post_id`");
+			// Calculate ammount of available slots. (max ammount of users - current ammount of users)
+			$availableUsers = ($maxUsers - $deelnemers);
+			echo '<p class="datee">Begint op: '.$startDate.'</p>';
+			echo '<p class="datee">Eindigt op: '.$endDate.'</p><br>';
+			echo '<p class="users">Beschikbare Plekken: '.$availableUsers.'</p>';
 		}
-
-		if ( has_excerpt() && is_singular() ) {
-			?>
-
-			<div class="intro-text section-inner max-percentage<?php echo $intro_text_width; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?>">
-				<?php the_excerpt(); ?>
-			</div>
-
-			<?php
-		}
-
-		// Default to displaying the post meta.
-		twentytwenty_the_post_meta( get_the_ID(), 'single-top' );
 		?>
 
 	</div><!-- .entry-header-inner -->

@@ -3,6 +3,7 @@
 /*=======================================================================*/
 /* Header Image */
 .theHeader .imgContainer .headerIMG {
+  display: block;
   width: 30%;
   margin: 0 auto;
 }
@@ -170,6 +171,165 @@ html
     grid-template-columns: repeat(2, 1fr);
   }
 }
+/*========================================================================
+  Login/Registration
+/*=======================================================================*/
+
+#wppb-loginform .login-username,
+#wppb-loginform .login-password,
+#wppb-register-user ul li {
+  display: grid;
+}
+
+.wppb-form-field label,
+#wppb-login-wrap .login-username label,
+#wppb-login-wrap .login-password label,
+#wppb-login-wrap .login-auth label.user_login {
+  width: fit-content !important;
+}
+
+#elementor-tab-title-1141,
+#elementor-tab-title-1142 {
+  color: grey;
+}
+
+.elementor-widget-tabs.elementor-tabs-view-horizontal
+  .elementor-tab-desktop-title.elementor-active {
+  border-radius: 20px 20px 0 0;
+}
+#elementor-tab-content-1142,
+#elementor-tab-content-1141 {
+  border-radius: 0 0 20px 20px;
+}
+
+.elementor-widget-tabs .elementor-tabs-wrapper {
+  display: grid;
+  text-align: center;
+  grid-template-columns: 1fr 1fr;
+}
+
+.footer-top-visible .footer-nav-widgets-wrapper {
+  max-height: 100px;
+}
+
+.header-footer-group pre,
+.header-footer-group fieldset,
+.header-footer-group input,
+.header-footer-group textarea,
+.header-footer-group table,
+.header-footer-group table *,
+.footer-nav-widgets-wrapper,
+#site-footer,
+.menu-modal nav *,
+.footer-widgets-outer-wrapper,
+.footer-top {
+  border-color: transparent !important;
+}
+
+#post-8 .post-inner .entry-content p {
+  padding: 10px;
+  border-radius: 20px;
+  background-color: blue;
+  color: white;
+}
+
+/*========================================================================
+  Activiteiten overzicht
+/*=======================================================================*/
+.boxx {
+  max-width: 1080px !important;
+  text-align: left;
+  color: #666;
+  font-weight: bold;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-family: Open Sans, Arial, sans-serif;
+  line-height: 3px;
+  margin-top: 20px !important;
+}
+.boxx::after {
+  content: "";
+  position: absolute;
+  height: 3px;
+  width: 30%;
+  background: #666;
+}
+.post-inner .entry-content .Activiteiten {
+  max-width: 1080px !important;
+  margin: 0 auto !important;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  margin-bottom: 20px !important;
+}
+.Activiteiten .Activiteit {
+  text-align: center;
+  padding: 20px;
+  background-color: #dde2eb;
+  border: 2px solid #a5a6a8;
+  border-radius: 20px;
+  max-width: 80%;
+  display: grid;
+}
+.actForm {
+  display: grid;
+}
+.ActButton {
+  align-self: flex-end;
+}
+.Activiteiten .Activiteit .title {
+  margin: 0;
+}
+.Activiteiten .Activiteit .dateTime {
+  padding: 0;
+  margin: 5px 0 0px 0;
+  font-weight: bold;
+  font-family: Open Sans, Arial, sans-serif;
+  font-size: 16px;
+  color: #606770;
+}
+.Activiteiten .Activiteit .description {
+  margin: 15px 0px;
+  font-size: 14px;
+  font-family: Open Sans, Arial, sans-serif;
+}
+.bar {
+  max-width: 1080px;
+  margin: 0 auto;
+  text-align: center;
+}
+.actForm.single {
+  display: grid;
+  width: 30%;
+  margin: 0 auto;
+}
+.datee {
+  margin: 0;
+  padding: 0;
+}
+.entry-header.has-text-align-center.header-footer-group {
+  padding-bottom: 0px !important;
+}
+.entry-content {
+  text-align: center !important;
+}
+@media (max-width: 3000px) {
+  .post-inner .entry-content .Activiteiten {
+    width: 100%;
+  }
+}
+@media (max-width: 800px) {
+  .post-inner .entry-content .Activiteiten {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .Activiteiten .Activiteit {
+    max-width: 100%;
+  }
+}
+/*========================================================================
+  Deelnemers Overzicht
+/*=======================================================================*/
+
 /*========================================================================
   Misc
 /*=======================================================================*/

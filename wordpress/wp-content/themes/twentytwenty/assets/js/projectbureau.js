@@ -6,6 +6,7 @@ $(document).ready(function() {
 
     // Add the icon button for back to top button.
     $("body.page").append('<a class="top"><i class="fas fa-arrow-up"></i></a>');
+    $(".section-inner .post-edit").remove();
 
     // Check if the user is scrolled down a bit.
     $(window).scroll(function ScrollUp() {

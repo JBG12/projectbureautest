@@ -155,8 +155,42 @@ add_action( 'after_setup_theme', 'twentytwenty_theme_support' );
  */
 
 /*========================================================================
-  Include custom CSS, Javascript and PHP files.
+  Set second database values and include custom CSS, Javascript and PHP files.
 /*=======================================================================*/
+
+// Create custom post type sub menu to display all "deelnemers" in per activity.
+add_action( 'admin_menu', 'mt_add_pages' );
+
+function mt_add_pages() {
+	add_submenu_page(
+		'edit.php?post_type=activiteiten',
+		__( 'Deelnemers', 'menu-test' ),
+		__( 'Deelnemers', 'menu-test' ),
+		'manage_options',
+		'testsettings',
+		'mt_settings_page',
+		'my-custom-submenu-page',
+		'my_custom_submenu_page_content'
+	);
+
+    function mt_settings_page() {
+        echo "<h2>" . __( 'Deelnemers', 'menu-test' ) . "</h2>";
+		// Call on function is project2.php
+		echo do_shortcode('[deelnemerscode]');
+    }
+}
+
+// Change exerpt length.
+function mytheme_custom_excerpt_length( $length ) {
+    return 20;
+}
+add_filter( 'excerpt_length', 'mytheme_custom_excerpt_length', 999 );
+// DB
+function db_2() {
+    global $db2;
+    $db2 = new wpdb('cmsho_31191404', 'zRNzOLasZ', 'cmsho_31191404_opslag', 'sql211.cmshost.nl');
+}
+add_action('init', 'db_2');
 
 // CSS
 wp_enqueue_style( 'projectStyle', get_template_directory_uri() . '/assets/css/cssProject.css' );

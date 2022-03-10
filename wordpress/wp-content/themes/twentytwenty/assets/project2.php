@@ -157,7 +157,7 @@ function theMainFooter() {
             </div>
         </div>
         <div class="footerBox3">
-            <a href="<?php echo home_url()?>/gebruikersverklaring">Gebruikersverklaring</a>
+            <p>Test text</p>
         </div>
     </div>
     <?php
@@ -167,49 +167,8 @@ add_shortcode('Footer', 'theMainFooter');
 /*========================================================================
   Function to List all Activiteiten
 /*=======================================================================*/
-// function activiteit() {
-//     if ( is_user_logged_in() ) {
-//         $args = array(
-//             'post_type' => 'Activiteiten',
-//             'posts_per_page' => 10
-//         );
-//         global $post;
-//         $query = new WP_Query($args);
-//         if ($query->have_posts()) {
-//             for ($x = 1; $x <= 12; $x++) {
-//                 $dateObj   = DateTime::createFromFormat('!m', $x);
-//                 $monthName = $dateObj->format('F');
-//                 echo '<div class="boxx">'.$monthName.'</div>';
-//                 echo '<div class="Activiteiten">';
-//                     while ( $query->have_posts() ) : $query->the_post();
-//                     $post_id    = get_the_ID();
-//                     $title      = get_the_title();
-//                     $startDate  = get_field("start_tijd", $post_id);
-//                     $month      = date("m",strtotime($startDate));
-
-//                     if ($month == $x) {
-//                         checks($post_id, $title);
-//                         // $fgu = []
-//                         // $fgu['jan']->append
-//                     }
-//                     endwhile;
-//                 echo '</div>';
-//             }
-//         }
-//     } else {
-//         echo '<p class="error">Je moet ingelogd zijn om de activiteiten te kunnen bekijken!</p>';
-//         echo '<p class="error">Klik <a href="'.home_url().'/login-register">hier</a> om in te loggen of een account te registreren.</p>';
-//     }
-// }
-// add_shortcode('test12', 'activiteit');
-
-
-/*========================================================================
-  Function to List all Activiteiten V2
-/*=======================================================================*/
-
-function Activiteiten_V2() {
-    if(is_user_logged_in()){
+function activiteit() {
+    if ( is_user_logged_in() ) {
         $args = array(
             'post_type' => 'Activiteiten',
             'posts_per_page' => 10
@@ -218,42 +177,34 @@ function Activiteiten_V2() {
         $query = new WP_Query($args);
         if ($query->have_posts()) {
             for ($x = 1; $x <= 12; $x++) {
-                $activ_array[$x]['ID'] = array();
-                $activ_array[$x]['title'] = array();
-                while ( $query->have_posts() ) : $query->the_post();
-                    $post_id    = get_the_ID();
-                    $startDate  = get_field("start_tijd", $post_id);
-                    $month      = date("m",strtotime($startDate));
-                    if ($month == $x) {
-                        array_push($activ_array[$x]['ID'], $post_id);
-                    }
-                endwhile;
-            }
-        }
-        for ($x = 1; $x <= 12; $x++) {
-            $dateObj   = DateTime::createFromFormat('!m', $x);
-            $monthName = $dateObj->format('F');
-            if (!empty($activ_array[$x]['ID'])){
+                $dateObj   = DateTime::createFromFormat('!m', $x);
+                $monthName = $dateObj->format('F');
                 echo '<div class="boxx">'.$monthName.'</div>';
                 echo '<div class="Activiteiten">';
-                $index = 0;
-                foreach($activ_array[$x]['ID'] as $post_id){
-                    checks($post_id);
-                }
+                    while ( $query->have_posts() ) : $query->the_post();
+                    $post_id = get_the_ID();
+                    $title = get_the_title();
+                    $startDate  = get_field("start_tijd", $post_id);
+                    $month = date("m",strtotime($startDate));
+
+                    if ($month == $x) {
+                        checks($post_id, $title);
+                    }
+                    endwhile;
+                // Format number to the according month in letters.
+
                 echo '</div>';
             }
+
         }
     } else {
         echo '<p class="error">Je moet ingelogd zijn om de activiteiten te kunnen bekijken!</p>';
         echo '<p class="error">Klik <a href="'.home_url().'/login-register">hier</a> om in te loggen of een account te registreren.</p>';
     }
 }
+add_shortcode('test12', 'activiteit');
 
-add_shortcode('test12', 'Activiteiten_V2');
-
-
-
-function checks($post_id) {
+function checks($post_id, $title) {
     // Get user info
     $user_info  = wp_get_current_user();
     $user_ID    = $user_info->ID;
@@ -269,20 +220,20 @@ function checks($post_id) {
     // Get second database connection information from functions.php
     global $db2;
 
-    $title = get_the_title($post_id);
     echo '<div id="'.get_the_ID().'" class="Activiteit">';
+    echo $month;
+    echo $post_id;
         echo '<h4 class="title">';
-            echo '<a href="'.get_permalink().'">'.$title.'</a>';
+            echo '<a href="'.get_permalink().'">'.get_the_title().'</a>';
         echo '</h4>';
         echo '<p class="dateTime">'.$pieces[0].'<br>'.$pieces[1].'</p>';
-        echo '<p class="description">'.get_the_excerpt($post_id).'</p>';
+        echo '<p class="description">'.get_the_excerpt().'</p>';
         // Create a form to call on a statement when the button is clicked,
         echo '<form class="actForm" method="post">';
-        // Check if the ID of the user is already found, if so then display "Uitschrijven" button.
-        if ($already = $db2->get_var("SELECT ID FROM `$post_id` WHERE ID = $user_ID")) {
-            echo '<input type="submit" name="Uitschrijf'.$post_id.'" value="Uitschrijven" class="Uitschrijf"/>';
-        } else {
         // Add the ID of the input (button) to the name of the button to make it "activiteit" specific.
+        if ($already = $db2->get_var("SELECT column_name FROM `$post_id` WHERE ID = $user_ID")) {
+            echo '<p>TEST</p>';
+        } else {
         echo '<input type="submit" name="ActButton'.$post_id.'" value="Deelnemen" class="ActButton"/>';
         }
         echo '</form>';
@@ -293,44 +244,33 @@ function checks($post_id) {
         if ($exists = $db2->get_var("SHOW TABLES LIKE '".$post_id."'")) {
             // If the tabel exists, insert the user account values into the tabel from the specific activity.
             $insert = $db2->get_var("INSERT INTO `$post_id` (`ID`, `Naam`, `Email`) VALUES ('$user_ID', '$user_name', '$user_email')");
-            // Create setup for mail and send mail to user to verify.
-            $to = $user_email;
-            $subject = 'Je hebt je ingeschreven voor '.$title;
+
+            $to = 'larsderover@hotmail.com';
+            $subject = 'The '.$title;
             $body = ' 
-            <html>
-            <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.ibb.co/0hGTFcv/Plak-Cirkels-RGB-2.png" alt="" width="182" height="182" /></p>
-            <h1 style="text-align: center;">U heeft zich succesvol ingeschreven bij een nieuwe activiteit!</h1>
-            <table style="border: 2px dashed; border-color: black; width: 100%; height: 54px;" cellspacing="0">
-            <tbody>
-            <tr style="height: 18px;">
-            <th style="height: 18px; width: 37.9085%;">Activiteit:</th>
-            <td style="height: 18px; width: 61.22%;">'.$title.'</td>
-            </tr>
-            <tr style="background-color: #e0e0e0;">
-            <th style="height: 18px; width: 37.9085%;">Datum:</th>
-            <td style="height: 18px; width: 61.22%;">'.$pieces[0].'</td>
-            </tr>
-            <tr style="height: 18px;">
-            <th style="height: 18px; width: 37.9085%;">Tijd:</th>
-            <td style="height: 18px; width: 61.22%;">'.$pieces[1].'</td>
-            </tr>
-            <tr style="background-color: #e0e0e0;">
-            <th style="height: 18px; width: 37.9085%;">Omschrijving:</th>
-            <td style="height: 18px; width: 61.22%;">'.get_the_excerpt().'</td>
-            </tr>
-            </tbody>
-            </table>
-            <p>&nbsp;</p>
-            <p>Heeft u zich bedacht? Dan kunt u zich uitschrijven door op de knop hieronder te klikken.</p>
-            <div>
-            <a href="'.get_permalink().'" style="background-color: #e22658; color: #fff; width: 100%; margin: 0 auto; text-align: center; padding: 15px; border-radius: 5px;" border="0" width="100%" >Uitschrijven</a>
-            </table>
-            </div>
+            <html> 
+            <head> 
+                <title>Welcome to CodexWorld</title> 
+            </head> 
+            <body> 
+                <h1>Thanks you for joining with us!</h1> 
+                <table cellspacing="0" style="border: 2px dashed #FB4314; width: 100%;"> 
+                    <tr> 
+                        <th>Name:</th><td>CodexWorld</td> 
+                    </tr> 
+                    <tr style="background-color: #e0e0e0;"> 
+                        <th>Email:</th><td>contact@codexworld.com</td> 
+                    </tr> 
+                    <tr> 
+                        <th>Website:</th><td><a href="http://www.codexworld.com">www.codexworld.com</a></td> 
+                    </tr> 
+                </table> 
+            </body> 
             </html>'; 
             $headers = array('Content-Type: text/html; charset=UTF-8');
              
             wp_mail( $to, $subject, $body, $headers );
-            echo '<META HTTP-EQUIV=Refresh CONTENT="0; URL='.$current_URL.'">';
+
         } else {
         // If tabel doesnt exist yet, create table, then insert user info.
             $createTable = $db2->get_var("CREATE TABLE `$post_id` (
@@ -341,66 +281,8 @@ function checks($post_id) {
             $insert = $db2->get_var("INSERT INTO `$post_id` (`ID`, `Naam`, `Email`) VALUES ('$user_ID', '$user_name', '$user_email')");
             // Also send mail to user here.
             wp_mail( $to, $subject, $body, $headers );
-            echo '<META HTTP-EQUIV=Refresh CONTENT="0; URL='.$current_URL.'">';
         }
     }
-    // If "Uitschrijven" button is used.
-    if(isset($_POST['Uitschrijf'.$post_id.''])) {
-        $remove = $db2->get_var("DELETE FROM `$post_id` WHERE ID = $user_ID");
-        echo '<META HTTP-EQUIV=Refresh CONTENT="0; URL='.$current_URL.'">';
-    }
-}
-
-function deelnemers() {
-    $args = array(
-        'post_type' => 'Activiteiten',
-        'posts_per_page' => 10
-    );
-    global $post;
-    global $db2;
-    $query = new WP_Query($args);
-    if ($query->have_posts()) {
-        echo '<div class="deelnemers" style="
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 20px;">';
-            while ( $query->have_posts() ) : $query->the_post();
-                $post_id    = get_the_ID();
-                $title      = get_the_title();
-                $serverName = "sql211.cmshost.nl";
-                $userName   = "cmsho_31191404";
-                $password   = "zRNzOLasZ";
-                $dbName     = "cmsho_31191404_opslag";
-                $conn = mysqli_connect($serverName, $userName, $password, $dbName);
-
-                $maxUsers 	= get_field("maximaal_aantal_deelnemers", $post_id);
-                $deelnemers = $db2->get_var("SELECT COUNT(*) FROM `$post_id`");
-
-                $test1 = "SELECT `ID`, `Naam`, `Email` FROM `$post_id`";
-                $result = mysqli_query($conn, $test1);
-
-                echo '<div class="deelnemer" style="
-                background-color: #66676a;
-                border-radius: 5px;
-                padding: 25px;
-                margin-bottom: 20px;
-                width: fit-content;
-                margin: 0 auto;">';
-                    echo '<p class="title" style="color:white; font-size:18px; font-weight:bold; text-align:center;margin: 0;padding: 0;">'.$title.'</p>';
-                    echo '<p style="color:white;text-align:center;">Aantal Deelnemers: '.$deelnemers.'/'.$maxUsers.'</p>';
-                    while($row = mysqli_fetch_assoc($result)) {
-                        echo '<p style="color:white;font-size:16px;">Deelnemer</p>';
-                        echo '<p style="color:white;">';
-                        echo "User ID: " . $row['ID'] . "<br>" .
-                            "User Name: " . $row['Naam'] . "<br>" .
-                            "User Email: " . $row['Email'] . "<br><br>";
-                        echo '</p>';
-                    }
-                echo '</div>';
-            endwhile;
-        echo '</div>';
-    }
 
 }
-add_shortcode('deelnemerscode', 'deelnemers');
 ?>
