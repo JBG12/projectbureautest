@@ -272,7 +272,7 @@ function checks($post_id) {
     $title = get_the_title($post_id);
     echo '<div id="'.get_the_ID().'" class="Activiteit">';
         echo '<h4 class="title">';
-            echo '<a href="'.get_permalink().'">'.$title.'</a>';
+            echo '<a href="'.get_permalink($post_id).'">'.$title.'</a>';
         echo '</h4>';
         echo '<p class="dateTime">'.$pieces[0].'<br>'.$pieces[1].'</p>';
         echo '<p class="description">'.get_the_excerpt($post_id).'</p>';
